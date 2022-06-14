@@ -12,7 +12,7 @@ public class Homework1 {
             System.out.printf("Треугольное число с порядковым номером %d равно %d \n", nm, Triangle_Nmb(nm));
         }
         catch (NumberFormatException nfe){
-            System.out.println("Введите корректное число: " + nfe.getMessage());
+            System.out.println("Ошибка формата числа: " + nfe.getMessage());
         }
         sc.close();
     }
