@@ -1,11 +1,82 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
+
 public class ChessKnight {
     public static void main(String[] args) {
         int n = Razmer_Doski(); 
         //System.out.println(n);
         //System.out.println(Nomer_Polya(2, 7, n));
         //Print_Array(Koordinaty_Polya(64, n));
-        Narisovat_Dosku(n);
+        //Narisovat_Dosku(n);
+        List<List<Integer>> Log = new ArrayList<>();
+        Log = Perviy_Chod(n);
+        System.out.println(Log);
+        System.out.println(Poisk_Choda(Log.get(Log.size()-1), n));
+    }
+    
+    public static List<List<Integer>> Poisk_Choda(List<Integer> list, int m){
+        List<List<Integer>> res = new ArrayList<>();
+        if((list.get(0)-2)>0 && (list.get(1)-1)>0){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(list.get(0)-2);
+            temp.add(list.get(1)-1);
+            res.add(temp);
+        }
+        if((list.get(0)-2)>0 && (list.get(1)+1)<m){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(list.get(0)-2);
+            temp.add(list.get(1)+1);
+            res.add(temp);
+        }
+        if((list.get(0)-1)>0 && (list.get(1)-2)>0){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(list.get(0)-1);
+            temp.add(list.get(1)-2);
+            res.add(temp);
+        }
+        if((list.get(0)-1)>0 && (list.get(1)+2)<m){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(list.get(0)-1);
+            temp.add(list.get(1)+2);
+            res.add(temp);
+        }
+        if((list.get(0)+1)<m && (list.get(1)-2)>0){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(list.get(0)+1);
+            temp.add(list.get(1)-2);
+            res.add(temp);
+        }
+        if((list.get(0)+1)<m && (list.get(1)+2)<m){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(list.get(0)+1);
+            temp.add(list.get(1)+2);
+            res.add(temp);
+        }
+        if((list.get(0)+2)<m && (list.get(1)-1)>0){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(list.get(0)+2);
+            temp.add(list.get(1)-1);
+            res.add(temp);
+        }
+        if((list.get(0)+2)<m && (list.get(1)+1)<m){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(list.get(0)+2);
+            temp.add(list.get(1)+1);
+            res.add(temp);
+        }
+        
+        return res;
+    }
+    public static List<List<Integer>> Perviy_Chod(int m){
+        List<List<Integer>> Log = new ArrayList<>();
+        List<Integer> Koord = new ArrayList<>();
+        Random k = new Random();
+        Koord.add(k.nextInt(m));
+        Koord.add(k.nextInt(m));
+        Log.add(Koord);
+        return Log;
     }
     public static void Narisovat_Dosku(int m){
         int [][] arr = new int[m][m];
