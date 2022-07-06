@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack; */
 
-public class postfix {
+public class compiler {
     public static void main(String[] args) {
         //List<Character> arif_dos = List.of('+','-','*','/','^','(',')');
         //System.out.println(arif_dos);
-        Data_input dv = new Data_input();
+        data_input dv = new data_input();
         List<String> ls = dv.Vvod_dannych();
         System.out.println(ls);
         
