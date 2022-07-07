@@ -74,7 +74,7 @@ public class data_input {
         sc.close();
         return ls;
     }
-    public String Sergant_Mnogonozhko(Queue<String> bronetransporter){//позволяет обрабатывать многозначные числа и функции
+    private String Sergant_Mnogonozhko(Queue<String> bronetransporter){//позволяет обрабатывать многозначные числа и функции
         String res="";
         if(!bronetransporter.isEmpty()){
             while(!bronetransporter.isEmpty()){
