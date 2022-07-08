@@ -9,9 +9,11 @@ import java.util.Stack;
 public class data_input {
     public List<String> Vvod_dannych(){
         //Выводим минимум правил на экран
-        System.out.println("Введите арифметическое выражение, содержащее только целые числа.");
-        System.out.println("Допустимо вводить функции (sin(), cos() и др.).");
-        System.out.println("При необходимости использования числа Пи введите pi.");
+        System.out.println("Введите арифметическое выражение.");
+        System.out.println("Допустимы целые и дробные числа");
+        System.out.println("Допустимы бинарные операции: +, -, *, /, %, ^.");
+        System.out.println("Допустимо вводить функции sin(), cos(), tg(), ln(), lg().");
+        System.out.println("При необходимости ввода числа Пи введите pi, числа e - введите e (лат.).");
         System.out.println("Допускаются только круглые скобки");
         System.out.printf("Ваше выражение: ");
         //считываем, что ввел пользователь
@@ -22,7 +24,7 @@ public class data_input {
         Queue<String> chisla = new LinkedList<>();//очередь для хранения чисел
         Queue<String> func = new LinkedList<>();//очередь для хранения функций
         Stack<String> skobki = new Stack<>();//Стэк для обработки скобок
-        List<Character> operands = List.of('+','-','*','/','^');//хранилище операторов
+        List<Character> operands = List.of('+','-','*','/','^', '%');//хранилище операторов
 
         List<String> ls = new ArrayList<>();
         char [] arr = s.toCharArray();//переводим в массив строку с выражением
@@ -30,34 +32,29 @@ public class data_input {
             if(arr[i] == ')' && skobki.empty()){//если встретили закрывающую скобку, при этом не было открывающей - бросаем ошибку
                 System.out.println("Введенное выражение содержит ошибку. Проверьте скобки.");
                 System.exit(1);
-            }
-            if(arr[i] == ')' && !skobki.empty()){//встретил закрывающую скобку, но стэк скобок не пуст
+            }else if(arr[i] == ')' && !skobki.empty()){//встретил закрывающую скобку, но стэк скобок не пуст
                 String ch = Sergant_Mnogonozhko(chisla);
                 String f = Sergant_Mnogonozhko(func);
                 if(ch!="") ls.add(ch);
                 if(f!="") ls.add(f);
                 ls.add(Character.toString(arr[i]));
                 skobki.pop();
-            }
-            if(arr[i]=='('){//встретили открывающую скобку
+            }else if(arr[i]=='('){//встретили открывающую скобку
                 String ch = Sergant_Mnogonozhko(chisla);
                 String f = Sergant_Mnogonozhko(func);
                 if(ch!="") ls.add(ch);
                 if(f!="") ls.add(f);
                 ls.add(Character.toString(arr[i]));
                 skobki.push(Character.toString(arr[i]));
-            }
-            if(operands.contains(arr[i])){//встретили оператор
+            }else if(operands.contains(arr[i])){//встретили оператор
                 String ch = Sergant_Mnogonozhko(chisla);
                 String f = Sergant_Mnogonozhko(func);
                 if(ch!="") ls.add(ch);
                 if(f!="") ls.add(f);
                 ls.add(Character.toString(arr[i]));
-            }
-            if(Character.isDigit(arr[i])){//встретили число
+            }else if(Character.isDigit(arr[i])){//встретили число
                 chisla.add(Character.toString(arr[i]));
-            }
-            if(Character.isAlphabetic(arr[i])){//встретили надпись
+            }else if(Character.isAlphabetic(arr[i])){//встретили надпись
                 func.add(Character.toString(arr[i]));
             }
         }
