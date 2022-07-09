@@ -6,37 +6,39 @@ import java.util.Stack;
 
 public class postfix {
     public double calc(List<String> list){
-        //double res=0;
         Stack<Double> st = new Stack<>();
         List<String> pi = List.of("pi");
         List<String> e = List.of("e");
         List<Character> bin_op = List.of('+','-','*','/','^','%');
-        List<String> pre_func = List.of("sin", "cos", "tg", "ln", "lg");
+        List<String> pre_func = List.of("sin", "cos", "tg", "ln", "lg", "exp");
 
         for (String item : list) {
             if(isNumeric(item)) {
                 st.push(Double.parseDouble(item));
-                //System.out.println(st.peek());
             } else if(pi.contains(item)) {
                 st.push(Math.PI);
-                //System.out.println(st.peek());
             } else if(e.contains(item)) {
                 st.push(Math.E);
-                //System.out.println(st.peek());
             } else if(bin_op.contains(item.charAt(0))) {
                 double [] arr = new double[2];
                 for (int i = 1; i >= 0; i--) {
+                    if(st.empty()){
+                        System.out.println("Введенное вами выражение содержит ошибку");
+                        System.exit(1);
+                    }
                     arr[i] = st.pop();
                 }
                 st.push(bin_oper(arr,item.charAt(0)));
-                //System.out.println(st.peek());
             } else if(pre_func.contains(item)) {
                 st.push(func_oper(st.pop(),item));
-                //System.out.println(st.peek());
             } else {
                 System.out.println("Во введенном выражении обнаружена ошибка");
                 System.exit(1);
             }
+        }
+        if(st.empty()){
+            System.out.println("Введенное вами выражение содержит ошибку");
+            System.exit(1);
         }
         return st.pop();
     }
@@ -58,31 +60,13 @@ public class postfix {
         }
     }
     private double func_oper(double a, String s){
-    /*     List<String> sinus = List.of("sin");
-        List<String> cosin = List.of("cos");
-        List<String> tangens = List.of("tg");
-        List<String> nat_log = List.of("ln");
-        List<String> log_10 = List.of("lg"); 
-
-        if(sinus.contains(s)) {
-            return Math.sin(a);
-        }else if(cosin.contains(s)) {
-            return Math.cos(a);
-        }else if(tangens.contains(s)) {
-            return Math.tan(a);
-        }else if(nat_log.contains(s)) {
-            return Math.log(a);
-        }else if(log_10.contains(s)) {
-            return Math.log10(a);
-        }else {
-            return 0;
-        } */
         switch(s){
             case "sin": return Math.sin(a);
             case "cos": return Math.cos(a);
             case "tg": return Math.tan(a);
             case "ln": return Math.log(a);
             case "lg": return Math.log10(a);
+            case "exp": return Math.exp(a);
             default: return 0;
         }
     }
@@ -90,7 +74,7 @@ public class postfix {
         Stack<String> st = new Stack<>();
         List<String> res = new ArrayList<>();
         List<String> bin_op = List.of("+","-","*","/","^", "%");
-        List<String> pre_func = List.of("sin", "cos", "tg", "ln", "lg");
+        List<String> pre_func = List.of("sin", "cos", "tg", "ln", "lg", "exp");
         List<String> cnst = List.of("pi","e");
 
         int i = ls.size()-1;

@@ -10,29 +10,35 @@ public class data_input {
     public List<String> Vvod_dannych(){
         //Выводим минимум правил на экран
         System.out.println("Введите арифметическое выражение.");
-        System.out.println("Допустимы целые и дробные числа");
+        System.out.println("Допустимы только целые числа. Дробные могут быть введены как отношение целых в выражении.");
+        System.out.println("Например, число 0,25 это 1/4.");
         System.out.println("Допустимы бинарные операции: +, -, *, /, %, ^.");
-        System.out.println("Допустимо вводить функции sin(), cos(), tg(), ln(), lg().");
+        System.out.println("Допустимо вводить функции sin(), cos(), tg(), ln(), lg(), exp().");
+        System.out.println("Вычисление функций sin(), cos(), tg(), ведется из предположения, что аргумент передан в радианах.");
         System.out.println("При необходимости ввода числа Пи введите pi, числа e - введите e (лат.).");
-        System.out.println("Допускаются только круглые скобки");
+        System.out.println("Допускаются только круглые скобки.");
         System.out.printf("Ваше выражение: ");
         //считываем, что ввел пользователь
         Scanner sc = new Scanner(System.in);
         String raw_s = sc.nextLine().trim();
         String s = raw_s.toLowerCase().replaceAll("\\s+", "");//убираем пробелы везде
-
+        
         Queue<String> chisla = new LinkedList<>();//очередь для хранения чисел
         Queue<String> func = new LinkedList<>();//очередь для хранения функций
         Stack<String> skobki = new Stack<>();//Стэк для обработки скобок
         List<Character> operands = List.of('+','-','*','/','^', '%');//хранилище операторов
-
+        List<Character> mist = List.of('[',']','{','}','<','>');//неправильные скобки
+        
         List<String> ls = new ArrayList<>();
         char [] arr = s.toCharArray();//переводим в массив строку с выражением
         for (int i = 0; i < arr.length; i++) {
             if(arr[i] == ')' && skobki.empty()){//если встретили закрывающую скобку, при этом не было открывающей - бросаем ошибку
                 System.out.println("Введенное выражение содержит ошибку. Проверьте скобки.");
                 System.exit(1);
-            }else if(arr[i] == ')' && !skobki.empty()){//встретил закрывающую скобку, но стэк скобок не пуст
+            } else if(mist.contains(arr[i])){//если пользователь ввел неправильную скобку
+                System.out.println("Введенное выражение содержит ошибку. Проверьте скобки.");
+                System.exit(1);
+            } else if(arr[i] == ')' && !skobki.empty()){//встретил закрывающую скобку, но стэк скобок не пуст
                 String ch = Sergant_Mnogonozhko(chisla);
                 String f = Sergant_Mnogonozhko(func);
                 if(ch!="") ls.add(ch);
@@ -69,6 +75,10 @@ public class data_input {
             System.exit(1);
         }
         sc.close();
+        if(ls.isEmpty()){
+            System.out.println("Введенное выражение содержит ошибку.");
+            System.exit(1);
+        }
         return ls;
     }
     private String Sergant_Mnogonozhko(Queue<String> bronetransporter){//позволяет обрабатывать многозначные числа и функции
