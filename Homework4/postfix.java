@@ -30,6 +30,10 @@ public class postfix {
                 }
                 st.push(bin_oper(arr,item.charAt(0)));
             } else if(pre_func.contains(item)) {
+                if(st.empty()){
+                    System.out.println("Введенное вами выражение содержит ошибку");
+                    System.exit(1);
+                }
                 st.push(func_oper(st.pop(),item));
             } else {
                 System.out.println("Во введенном выражении обнаружена ошибка");
