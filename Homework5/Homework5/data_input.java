@@ -3,7 +3,10 @@ package Homework5;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class data_input{
     public List<Integer> dannye() throws IOException{
@@ -27,7 +30,7 @@ public class data_input{
         String soob2 = "Введите номер конечного узла (от одного до "+Integer.toString(b*h)+")"+"\n";
         int kon = tryCatchIt(soob2,1,b*h);
         while(kon==-1 || kon<1 || kon>b*h){
-            strt=tryCatchIt("Введите корректное значение: \n",1,b*h);
+            kon=tryCatchIt("Введите корректное значение: \n",1,b*h);
         }
         if(strt==kon){
             System.out.println("Конечный узел не может быть равен начальному.");
@@ -44,8 +47,34 @@ public class data_input{
         System.in.close();
         return list;
     }
-    
-    
+    public TreeMap<Integer,Integer> formiryemPole(List<Integer> ls){
+        TreeMap<Integer,Integer> tm = new TreeMap<>();
+        //распаковываем список:
+        int b=ls.get(0); int h=ls.get(1);int strt=ls.get(2);       
+        int kon = ls.get(3);int r = ls.get(4);
+        //создаем начальное поле при помощи treemap:
+        for (int i = 1; i <= b*h; i++) {
+            if(strt==i) tm.put(i,-1);
+            else tm.put(i,0);
+        }
+        //добавляем препятствия:
+        if(r!=0){
+            Random k = new Random();
+            int pr = k.nextInt(b*h);
+            System.out.println(pr);
+            for (int i = 0; i < r; i++) {
+                while( pr==0 || pr==strt || pr==kon || tm.get(pr)==-1){
+                    pr=k.nextInt(b*h);
+                }
+                tm.put(pr,-1);
+                pr=k.nextInt(b*h);
+            }
+        }
+         /* for (Map.Entry<Integer, Integer> entry : tm.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ". Value: " + entry.getValue());
+       } */
+        return tm;
+    }
     private static int tryCatchIt(String s, int min, int max){
         Scanner sc = new Scanner(System.in);
         System.out.printf(s,"\n");
