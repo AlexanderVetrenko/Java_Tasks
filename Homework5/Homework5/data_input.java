@@ -21,13 +21,13 @@ public class data_input{
             h=tryCatchIt("Введите корректное значение: \n",2,12);
         }
         list.add(h);
-        String soob1 = "Введите номер начального узла (от одного до "+Integer.toString(b*h)+")"+"\n";
+        String soob1 = "Введите номер начального узла (от 1 до "+Integer.toString(b*h)+")"+"\n";
         int strt = tryCatchIt(soob1,1,b*h);
         while(strt==-1 || strt<1 || strt>b*h){
             strt=tryCatchIt("Введите корректное значение: \n",1,b*h);
         }
         list.add(strt);
-        String soob2 = "Введите номер конечного узла (от одного до "+Integer.toString(b*h)+")"+"\n";
+        String soob2 = "Введите номер конечного узла (от 1 до "+Integer.toString(b*h)+")"+"\n";
         int kon = tryCatchIt(soob2,1,b*h);
         while(kon==-1 || kon<1 || kon>b*h){
             kon=tryCatchIt("Введите корректное значение: \n",1,b*h);
@@ -54,14 +54,12 @@ public class data_input{
         int kon = ls.get(3);int r = ls.get(4);
         //создаем начальное поле при помощи treemap:
         for (int i = 1; i <= b*h; i++) {
-            if(strt==i) tm.put(i,-1);
-            else tm.put(i,0);
+            tm.put(i,0);
         }
         //добавляем препятствия:
         if(r!=0){
             Random k = new Random();
             int pr = k.nextInt(b*h);
-            System.out.println(pr);
             for (int i = 0; i < r; i++) {
                 while( pr==0 || pr==strt || pr==kon || tm.get(pr)==-1){
                     pr=k.nextInt(b*h);
