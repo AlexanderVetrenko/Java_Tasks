@@ -1,6 +1,7 @@
 package Homework5;
 
 import java.util.Map;
+import java.util.Stack;
 import java.util.TreeMap;
 
 public class view {
@@ -27,5 +28,9 @@ public class view {
         System.out.print("   |");
         System.out.println();
     }
-    
+    public void printStack(Stack<Integer> st){
+        while(!st.empty()){
+            System.out.printf(" --> %d",st.pop());
+        }
+    }
 }

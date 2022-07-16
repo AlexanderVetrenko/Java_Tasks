@@ -20,6 +20,10 @@ public class controller {
         System.out.println();
         trmp=wa.waveAlg(trmp, st, b, h, kon);//выполняем волновой алгоритм
         pt.printTree(trmp,b,h);//выводим, что получилось после выполнения алгоритма
+        System.out.println();
+        System.out.println("Один из кратчайших путей от начального узла к конечному:");
+        pt.printStack(wa.poiskXoda(trmp, st, b, h, kon));
+        System.out.println();
         
 
     }
